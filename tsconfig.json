@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2018",                          
+    "target": "es2017",
+	"declaration": true,                         
     "module": "esnext",
     "moduleResolution": "node",                     
     "noEmitOnError": true,
     "lib": ["es2017", "dom"],                            
     "strict": true,  
     "esModuleInterop": false,                 
-    "outDir": "out-tsc",
-    "rootDir": "./",
+    "outDir": "dist",
+    "rootDir": "./src/",
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
