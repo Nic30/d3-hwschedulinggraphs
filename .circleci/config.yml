@@ -27,6 +27,9 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
+      - run:
+          name: Upload coverage report
+          command: npm run coveralls
 
       - save_cache:
           paths:
