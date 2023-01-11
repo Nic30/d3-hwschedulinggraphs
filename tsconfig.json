@@ -1,18 +1,13 @@
 {
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "target": "es2017",
-	"declaration": true,                         
-    "module": "esnext",
-    "moduleResolution": "node",                     
-    "noEmitOnError": true,
-    "lib": ["es2017", "dom"],                            
-    "strict": true,  
-    "esModuleInterop": false,                 
-    "outDir": "dist",
-    "rootDir": "./src/",
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "declaration": true,
+    "types": ["node", "jest"],    
+    "lib": ["es2020", "dom"],     
+    "module": "es2020",
+    "outDir": "./dist",
+    "rootDir": "./src/"
   }
   ,
   "include": ["./src/**/*.ts"]

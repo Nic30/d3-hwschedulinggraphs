@@ -23,6 +23,13 @@ Runs faster in Chrome than Firefox.
 
 ## Quickstart
 
+Prerequsities for linux
+* You may need to update nodejs PPA https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04
+  node > 14.0.0 is required in order to run tests with jest. 
+```bash
+sudo apt install nodejs 
+```
+
 To get started, install dependencies:
 
 ```bash

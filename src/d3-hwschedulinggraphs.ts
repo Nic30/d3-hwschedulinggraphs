@@ -82,8 +82,10 @@ export class HwSchedulingTimelineGraph {
 		this.graphWidth = 0;
 		this.graphHeight = 0;
 		this.resolveSizes();
-
-		new ResizeObserver(this.resolveSizes.bind(this)).observe(svgContainer)
+	
+		if (window.ResizeObserver) {
+			new window.ResizeObserver(this.resolveSizes.bind(this)).observe(svgContainer)
+		}
 	}
 	resolveSizes() {
 		var container = this.svgContainer.node();
