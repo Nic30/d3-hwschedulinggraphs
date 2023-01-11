@@ -2,5 +2,12 @@ node_modules
 out-tsc
 dist
 
-# Environment variables
-env-config.json
+.settings/
+.project
+.externalToolBuilders
+
+# package-lock.json is meant to be in git but in this phase of dev.
+# it is excluded because latest versions of every dependency
+# is always required
+package-lock.json
+
