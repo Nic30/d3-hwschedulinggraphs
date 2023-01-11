@@ -1,5 +1,5 @@
 ## d3-hwschedulinggraphs
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Nic30/d3-hwschedulinggraphs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Nic30/d3-hwschedulinggraphs/tree/main)[![Coverage Status](https://coveralls.io/repos/github/Nic30/d3-wave/badge.svg?branch=master)](https://coveralls.io/github/Nic30/d3-wave?branch=master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Nic30/d3-hwschedulinggraphs/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Nic30/d3-hwschedulinggraphs/tree/main)[![Coverage Status](https://coveralls.io/repos/github/Nic30/d3-hwschedulinggraphs/badge.svg?branch=master)](https://coveralls.io/github/Nic30/d3-hwschedulinggraphs?branch=master)
 
 This project is the widget which displays timeline graph (Gantt graph, task scheduling graph).
 Its primary purpose is a visualization of circuit scheduling in HLS engines.
