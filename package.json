@@ -1,6 +1,6 @@
 {
 	"name": "d3-hwschedulinggraphs",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Widget for timeline graph",
 	"main": "dist/d3-hwschedulinggraphs.js",
 	"module": "dist/d3-hwschedulinggraphs.js",
