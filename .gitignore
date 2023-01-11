@@ -1,9 +1,9 @@
-node_modules
-out-tsc
-dist
-coverage
+node_modules/*
+out-tsc/*
+dist/*
+coverage/*
 
-.settings/
+.settings/*
 .project
 .externalToolBuilders
 
