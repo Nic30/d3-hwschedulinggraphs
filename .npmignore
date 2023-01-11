@@ -4,3 +4,6 @@ web-dev-server.config.js
 index.html
 jest.config.js
 Readme.md
+.circleci
+tests
+babel.config.js
