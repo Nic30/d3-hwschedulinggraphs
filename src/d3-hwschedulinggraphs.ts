@@ -51,6 +51,7 @@ export class HwSchedulingTimelineGraph {
 	data: TimelineData;
 	dataNormalized: TimelineItemData[];
 	idToDataDict: { [id: number]: TimelineItemData };
+	applyHighlight: () => void;
 
 	constructor(svgContainer: HTMLDivElement, data: TimelineData,
 		elementHeight: number = 20, showRelations: boolean = true, fontSize: number = 8) {
@@ -82,7 +83,7 @@ export class HwSchedulingTimelineGraph {
 		this.graphWidth = 0;
 		this.graphHeight = 0;
 		this.resolveSizes();
-	
+		this.applyHighlight = () => {};
 		if (window.ResizeObserver) {
 			new window.ResizeObserver(this.resolveSizes.bind(this)).observe(svgContainer)
 		}
@@ -216,6 +217,7 @@ export class HwSchedulingTimelineGraph {
 				bars.style("opacity", 1);
 			}
 		}
+		this.applyHighlight = applyHighlight
 		function cancelTmpHighlight() {
 			// return to original highlight state and hide tooltip
 			if (tooltip) {
