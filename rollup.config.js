@@ -21,7 +21,7 @@ const mainConfig = {
 		sourcemap: !production,
 		//format: 'iife',
 		//format: 'cjs',
-		format: 'umd',
+		format: 'umd', // Universal Module Definition (cjs+amd)
 		file: definition.main,
 		globals: {
 			// lib name: name where lib exports itself on "window"
@@ -38,29 +38,5 @@ const mainConfig = {
 		typescript({ sourceMap: !production, inlineSources: !production })
 	]
 };
-const typesConfig = {
-	input: 'src/d3-hwschedulinggraphs.d.ts',
-	output: {
-		extend: true,
-		//dir: 'dist',
-		sourcemap: !production,
-		//format: 'iife',
-		//format: 'cjs',
-		format: 'umd',
-		file: definition.main,
-		globals: {
-			// lib name: name where lib exports itself on "window"
-			"d3": "d3",
-		},
-		name: 'd3',
-	},
-	external: ['d3'],
-	plugins: [
-		//resolve({
-		//  jsnext: true,
-		//  module: true,
-		//}),
-		typescript({ sourceMap: !production, inlineSources: !production, tsconfig: "tsconfig.types.json" })
-	]
-};
+
 export default [mainConfig];
