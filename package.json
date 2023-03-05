@@ -5,6 +5,7 @@
 	"main": "dist/d3-hwschedulinggraphs.js",
 	"module": "dist/d3-hwschedulinggraphs.js",
 	"types": "dist/d3-hwschedulinggraphs.d.ts",
+	"typings": "dist/d3-hwschedulinggraphs",
 	"scripts": {
 		"tsc:watch": "tsc --watch",
 		"start:single": "concurrently --kill-others --names tsc,web-dev-server \"npm run tsc:watch\" \"web-dev-server --app-index index.html --node-resolve --open --watch\"",
