@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "declaration": true /* Generates corresponding '.d.ts' file. */,
-    "emitDeclarationOnly": true,
-    "outDir": "dist/" /* Redirect output structure to the directory. */
-  }
-}
