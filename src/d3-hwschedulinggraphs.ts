@@ -8,7 +8,8 @@ import { createBezierCurves, createPolylines, TimlineLinkData } from './links';
 //          https://stackoverflow.com/questions/32959056/responsive-d3-zoom-behavior
 
 
-/**@var currentlySelected set of currently selected tasks and links, if it is empty all items has opacity 1 if this is not empty
+/**
+ * @var currentlySelected set of currently selected tasks and links, if it is empty all items has opacity 1 if this is not empty
  *	the items in this set has opacity 1 and others 0.5
  * @var margin margin between svg outer boundary and intern body
  * @var svgWidth current width of SVG element
