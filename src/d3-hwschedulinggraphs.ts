@@ -23,6 +23,8 @@ import { createBezierCurves, createPolylines, TimlineLinkData } from './links';
  * @var svg main SVG element where all things are rendered
  * @var plotAreaZoomed a svg g element for the objects where zoom behavior should be applied
  * @var reverseHighlighOppacity an oppacity which is used to un-highlight the not highlighted elemenets on mouse over
+ * @var applyHighlight a function which highlights object which are placed in currentlySelected
+ * @var idToSuccessorIds a dictionary mapping node id to successors ids
  */
 export class HwSchedulingTimelineGraph {
 	margin: Margin;
@@ -51,6 +53,7 @@ export class HwSchedulingTimelineGraph {
 	data: TimelineData;
 	dataNormalized: TimelineItemData[];
 	idToDataDict: { [id: number]: TimelineItemData };
+	idToSuccessorIds: { [predecessorId: number]: number[] };
 	applyHighlight: () => void;
 
 	constructor(svgContainer: HTMLDivElement, data: TimelineData,
@@ -61,7 +64,7 @@ export class HwSchedulingTimelineGraph {
 			bottom: 0,
 			right: 0,
 		};
-		this.reverseHighlighOppacity = 0.2; 
+		this.reverseHighlighOppacity = 0.2;
 
 		this.svgContainer = d3.select(svgContainer);
 
@@ -71,6 +74,7 @@ export class HwSchedulingTimelineGraph {
 		this.data = data;
 		this.dataNormalized = [];
 		this.idToDataDict = {};
+		this.idToSuccessorIds = HwSchedulingTimelineGraph._getSuccessorIdsDict(data.data);
 		this.elementHeight = elementHeight;
 
 		const { minStart, maxEnd } = findBoundaries(data.data);
@@ -88,6 +92,27 @@ export class HwSchedulingTimelineGraph {
 			new window.ResizeObserver(this.resolveSizes.bind(this)).observe(svgContainer)
 		}
 	}
+	/**
+	 * Creates dictionary of id to list of successor ids.
+	 *
+	 * @param nodes To be searched
+	 * @return dictionary of id to list of successor ids
+	 */
+	static _getSuccessorIdsDict(nodes: TimelineItem[]) {
+		const dict: { [id: number]: number[] } = {};
+		for (const item of nodes){
+			dict[item.id] = [];
+		}
+		for (const item of nodes) {
+			for (const port of item.portsIn) {
+				const predecessorID = port[2];
+				const successorList = dict[predecessorID];
+				successorList.push(item.id);
+			}
+		}
+		return dict;
+	}
+
 	resolveSizes() {
 		var container = this.svgContainer.node();
 		if (!container) {
