@@ -41,6 +41,7 @@ export class HwSchedulingTimelineGraph {
 	tooltip: d3.Selection<HTMLDivElement, unknown, HTMLElement, any> | null = null;
 	svgContainer: d3.Selection<HTMLDivElement, unknown, null, undefined>;
 	svg: d3.Selection<SVGSVGElement, TimelineData, HTMLDivElement, undefined> | null = null;
+	zoom: d3.ZoomBehavior<SVGSVGElement, TimelineData> | null = null;
 	plotAreaZoomed: d3.Selection<SVGGElement, TimelineData, HTMLDivElement, undefined> | null = null;
 
 	xScale: d3.ScaleLinear<number, number, never> | null = null;
@@ -88,7 +89,7 @@ export class HwSchedulingTimelineGraph {
 		this.graphWidth = 0;
 		this.graphHeight = 0;
 		this.resolveSizes();
-		this.applyHighlight = () => {};
+		this.applyHighlight = () => { };
 		if (window.ResizeObserver) {
 			new window.ResizeObserver(this.resolveSizes.bind(this)).observe(svgContainer)
 		}
@@ -101,7 +102,7 @@ export class HwSchedulingTimelineGraph {
 	 */
 	static _getSuccessorIdsDict(nodes: TimelineItem[]) {
 		const dict: { [id: number]: number[] } = {};
-		for (const item of nodes){
+		for (const item of nodes) {
 			dict[item.id] = [];
 		}
 		for (const item of nodes) {
@@ -120,6 +121,8 @@ export class HwSchedulingTimelineGraph {
 			throw new Error("Can not resolve sizes because parent node is not specified " + container);
 		}
 		var rect = container.getBoundingClientRect();
+		const prevWidth = this.svgWidth;
+		const prevHeight = this.svgHeight;
 		this.svgWidth = rect.width;
 		this.svgHeight = rect.height;
 		this.graphWidth = rect.width - this.margin.left - this.margin.right;
@@ -128,10 +131,24 @@ export class HwSchedulingTimelineGraph {
 			this.svg
 				.attr("width", this.svgWidth)
 				.attr("height", this.svgHeight);
+			if (this.xScaleOrig) {
+				this.xScaleOrig.range([0, this.graphWidth]);
+			}
 			if (this.xScale) {
 				this.xScale.range([0, this.graphWidth]);
-				if (this.xScale !== null && this.xAxis !== null && this.xAxisG !== null)
-					this.xAxisG.call(this.xAxis.scale(this.xScale));
+				if (this.xScale !== null && this.xAxis !== null && this.xAxisG !== null) {
+					this.xAxisG.call(this.xAxis);
+					//this.xAxisG.call(this.xAxis.scale(this.xScale));
+				}
+			}
+			if (this.zoom && this.plotAreaZoomed) {
+				// keep top left corner in place
+				const xScaleRatio = this.svgWidth / prevWidth;
+				this.zoom.scaleBy(this.svg, xScaleRatio);
+				// if width decreases we must move up in y because scale changed and image visually moved down
+				// y<0 moves image up
+				const yOffset = (this.svgHeight * (xScaleRatio - 1)) / 2;
+				this.zoom.translateBy(this.svg, (this.svgWidth - prevWidth) / 2, yOffset);
 			}
 		}
 	}
@@ -195,7 +212,7 @@ export class HwSchedulingTimelineGraph {
 			.attr("transform", "translate(" + [0, 0] + ")")
 			.call(xAxis);
 		const _this = this;
-		const zoom = d3.zoom<SVGSVGElement, TimelineData>()
+		const zoom = this.zoom = d3.zoom<SVGSVGElement, TimelineData>()
 			.scaleExtent([0.5, (this.maxEnd - this.minStart)])
 			//.translateExtent([[minStart, 0], [maxEnd, 0]])
 			.on("zoom", function(event): void {
@@ -225,7 +242,7 @@ export class HwSchedulingTimelineGraph {
 		const maxRow = Math.max(...rectangleData.map((d: TimelineItem) => {
 			return d.row;
 		}))
-		createClockGridLines(this.plotAreaZoomed, xScale, maxRow*2*this.elementHeight, this.data.clkPeriod, this.minStart, this.maxEnd);
+		createClockGridLines(this.plotAreaZoomed, xScale, maxRow * 2 * this.elementHeight, this.data.clkPeriod, this.minStart, this.maxEnd);
 
 		const barsContainer = this.plotAreaZoomed.append('g');
 		const bars = createChartBars(rectangleData, barsContainer, this.fontSize);
