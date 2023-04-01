@@ -152,31 +152,35 @@ export class HwSchedulingTimelineGraph {
 			}
 		}
 	}
-	//// timeline.zoomToTask(timeline.idToDataDict[23], 0.5)
-	//zoomToTask(task: TimelineItemData, screenPerc: number) {
-	//	let g = this.plotAreaZoomed;
-	//	if (!g)
-	//		return;
-	//	let xOffset = -task.x;
-	//	let yOffset = -task.y;
-	//	let width = this.svgWidth;
-	//	let height = this.svgHeight;
-	//
-	//	const w = task.width || 1;
-	//	const h = task.height || 1;
-	//	// scale everything so that it fits the specified size
-	//	let scale = Math.min(width / w, height / h);
-	//	// centering
-	//	xOffset += ((width / scale - task.width) / 2);
-	//	yOffset += ((height / scale - task.height) / 2);
-	//	scale *= screenPerc;
-	//	// if a transformation group was specified we
-	//	// perform a 'zoomToFit'
-	//	const t = new d3.ZoomTransform(scale, xOffset * scale, yOffset * scale);
-	//	g.transition()
-	//		.duration(200)
-	//		.attr("transform", t.toString());
-	//}
+	// timeline.zoomToTask(timeline.idToDataDict[23], 0.3, 200)
+	/**
+	 * Zoom to a specified task box
+     * :param screenPerc: how many screen percentage should the zommed task occupy
+     * :param durationMs: transition duration for animation
+	 */
+	zoomToTask(task: TimelineItemData, screenPerc: number, durationMs: number) {
+		let g = this.plotAreaZoomed;
+		const svg = this.svg;
+		if (!g || !this.zoom || !svg)
+			return;
+		let xOffset = -task.x;
+		let yOffset = -task.y;
+		let width = this.svgWidth;
+		let height = this.svgHeight;
+
+		const w = task.width || 1;
+		const h = task.height || 1;
+		// scale everything so that it fits the specified size
+		let scale = Math.min(width / w, height / h);
+		scale *= screenPerc;
+		// centering
+		xOffset += (((width - w) / scale) / 2);
+		yOffset += (((height - h) / scale) / 2);
+		const t = new d3.ZoomTransform(scale, xOffset * scale, yOffset * scale);
+		if (durationMs) {
+			this.zoom.transform(svg.transition().duration(durationMs), t);
+		}
+	}
 	draw() {
 		var svg = this.svg;
 		var tooltip = this.tooltip;
