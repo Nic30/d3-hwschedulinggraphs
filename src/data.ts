@@ -83,8 +83,6 @@ export class TimelineItemData extends TimelineItem {
 	width: number;
 	height: number;
 	label: string;
-	labelX: number;
-	labelY: number;
 	tooltip: string;
 
 	constructor(
@@ -95,8 +93,6 @@ export class TimelineItemData extends TimelineItem {
 		width: number,
 		height: number,
 		label: string,
-		labelX: number,
-		labelY: number,
 		tooltip: string
 	) {
 		super(
@@ -117,8 +113,6 @@ export class TimelineItemData extends TimelineItem {
 		this.width = width;
 		this.height = height;
 		this.label = label;
-		this.labelX = labelX;
-		this.labelY = labelY;
 		this.tooltip = tooltip;
 	}
 }
@@ -160,21 +154,8 @@ export const createElementData = (data: TimelineItem[], elementHeight: number, x
 		const y = d.row * elementHeight * 1.5;
 		const width = xEnd - x;
 		const height = elementHeight;
-
-		const charWidth = (width / (fontSize*0.6));
 		const tooltip = htmlEscape(d.label);
 
-		const singleCharWidth = fontSize * 0.5;
-		const singleCharHeight = fontSize * 0.45;
-
-		let label = d.label;
-
-		if (label.length > charWidth) {
-			label = label.split('').slice(0, charWidth - 1).join('') + '-';
-		}
-
-		const labelX = x + ((width / 2) - ((label.length / 2) * singleCharWidth));
-		const labelY = y + ((height / 2) + (singleCharHeight));
 		d.portsIn = d.portsIn.map(([t, name, dep, depOutI, linkColor]) => {
 			return [xScale(t), name, dep, depOutI, linkColor];
 		});
@@ -188,9 +169,7 @@ export const createElementData = (data: TimelineItem[], elementHeight: number, x
 			xEnd,
 			width,
 			height,
-			label,
-			labelX,
-			labelY,
+			d.label,
 			tooltip
 		);
 	});
