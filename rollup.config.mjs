@@ -10,7 +10,7 @@
 //  ]
 //});
 import typescript from '@rollup/plugin-typescript';
-const definition = require('./package.json')
+//import * as definition from './package.json' assert { type: "json" };
 const production = false; //!process.env.ROLLUP_WATCH
 
 const mainConfig = {
@@ -22,7 +22,7 @@ const mainConfig = {
 		//format: 'iife',
 		//format: 'cjs',
 		format: 'umd', // Universal Module Definition (cjs+amd)
-		file: definition.main,
+		file: "dist/d3-hwschedulinggraphs.js", //definition.main,
 		globals: {
 			// lib name: name where lib exports itself on "window"
 			"d3": "d3",
