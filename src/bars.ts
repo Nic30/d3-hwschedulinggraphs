@@ -23,8 +23,8 @@ export const createChartBars = (rectangleData: TimelineItemData[], barsContainer
 		.style('stroke', 'black');
 	const charWidth = fontSize * 0.6;
 
-	const singleCharWidth = fontSize * 0.5;
-	const singleCharHeight = fontSize * 0.45;
+	//const singleCharWidth = fontSize * 0.5;
+	//const singleCharHeight = fontSize * 0.45;
 	bars
 		.append('text')
 		.style('fill', d => d.textColor)

@@ -122,7 +122,7 @@ export class HwSchedulingTimelineGraph {
 		}
 		var rect = container.getBoundingClientRect();
 		const prevWidth = this.svgWidth;
-		const prevHeight = this.svgHeight;
+		//const prevHeight = this.svgHeight;
 		this.svgWidth = rect.width;
 		this.svgHeight = rect.height;
 		this.graphWidth = rect.width - this.margin.left - this.margin.right;
