@@ -91,7 +91,13 @@ export const createBezierCurveData = (rectangleData: TimelineItemData[], idToDat
 		d.portsIn
 			.map(([t, name, parentId, parentOutI, linkColor]: TimelineItemPortInRecord, inI: number) => {
 				const parent = idToDataDict[parentId];
+				if (!parent) {
+					throw new Error(`Can not find a node ${parentId} for a link src`);
+				}
 				const srcPort = parent.portsOut[parentOutI];
+				if (!srcPort) {
+					throw new Error(`Can not find a port ${parentOutI} on node ${parentId} for link src`);
+				}
 				// increase the amount rows occupied by both parent and current element (d)
 				const x0 = srcPort[0];
 				const y0 = parent.y + elementHeight / 2;
